@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2012-2019 Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -16,6 +16,8 @@ package interpreters
 import cats.{ ~>, Id}
 import cats.effect.IO
 import cats.syntax.either._
+
+import com.snowplowanalytics.iglu.client.Client
 
 import implementations.{S3Interpreter, TrackerInterpreter}
 
@@ -38,8 +40,8 @@ object Interpreter {
     * @return prepared interpreter
     */
   def initialize(cliConfig: CliConfig): Interpreter = {
-    val resolver = utils.Compat.convertIgluResolver(cliConfig.resolverConfig)
-      .fold(x => throw new RuntimeException(s"Initialization error. Cannot initialize Iglu Resolver. ${x.toList.mkString(", ")}"), r => r)
+    val resolver = Client.parseDefault(cliConfig.resolverConfig).value
+      .fold(x => throw new RuntimeException(s"Initialization error. Cannot initialize Iglu Resolver. $x"), identity)
     val amazonS3 = S3Interpreter.getClient(cliConfig.configYaml.aws)
     val tracker = TrackerInterpreter.initializeTracking(cliConfig.configYaml.monitoring)
 

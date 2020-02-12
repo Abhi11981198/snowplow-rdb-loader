@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2012-2019 Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -31,14 +31,12 @@ object Main {
    */
   def main(argv: Array[String]): Unit = {
     CliConfig.parse(argv) match {
-      case Some(Valid(config)) =>
+      case Valid(config) =>
         val status = run(config)
         sys.exit(status)
-      case Some(Invalid(errors)) =>
+      case Invalid(errors) =>
         println("Configuration error")
         errors.toList.foreach(error => println(error.message))
-        sys.exit(1)
-      case None =>
         sys.exit(1)
     }
   }

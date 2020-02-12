@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2012-2019 Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -50,19 +50,6 @@ object Step {
   case object Download extends DefaultStep
   case object Discover extends DefaultStep
   case object Load extends DefaultStep
-
-
-  implicit val optionalStepRead =
-    scopt.Read.reads { (fromString[IncludeStep](_)).andThen { s => s match {
-      case Right(x) => x
-      case Left(e) => throw new RuntimeException(e)
-    } } }
-
-  implicit val skippableStepRead =
-    scopt.Read.reads { (fromString[SkipStep](_)).andThen { s => s match {
-      case Right(x) => x
-      case Left(e) => throw new RuntimeException(e)
-    } } }
 
   /** Steps included into app by default */
   val defaultSteps: Set[Step] = sealedDescendants[SkipStep] ++ Set.empty[Step]

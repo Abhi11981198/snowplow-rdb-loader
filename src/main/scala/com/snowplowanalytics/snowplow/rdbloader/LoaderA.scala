@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2012-2019 Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -129,7 +129,7 @@ object LoaderA {
     EitherT(Free.liftF[LoaderA, Either[LoaderError, Unit]](DeleteDir(path)))
 
 
-  /** Block thread for some time */
+  /** Block thread for some time, milliseconds */
   def sleep(timeout: Long): Action[Unit] =
     Free.liftF[LoaderA, Unit](Sleep(timeout))
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2012-2019 Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -47,7 +47,7 @@ object SnowplowConfig {
    */
   def parse(configYml: String): Either[ConfigError, SnowplowConfig] = {
     val yaml: Either[Error, Yaml] = parser.parse(configYml)
-    yaml.flatMap(_.as[SnowplowConfig]).leftMap(e => DecodingError(e.show))
+    yaml.flatMap(_.as[SnowplowConfig]).leftMap(e => ConfigError(e.show))
   }
 
   // aws section

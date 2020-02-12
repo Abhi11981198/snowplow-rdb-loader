@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2012-2018 Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2012-2019 Snowplow Analytics Ltd. All rights reserved.
+ *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
  * You may obtain a copy of the Apache License Version 2.0 at http://www.apache.org/licenses/LICENSE-2.0.
@@ -18,6 +19,9 @@ import Keys._
 import sbtassembly._
 import sbtassembly.AssemblyKeys._
 
+// DynamoDB Local
+import com.localytics.sbt.dynamodb.DynamoDBLocalKeys._
+
 /**
  * Common settings-patterns for Snowplow apps and libraries.
  * To enable any of these you need to explicitly add Settings value to build.sbt
@@ -29,7 +33,7 @@ object BuildSettings {
    */
   lazy val buildSettings = Seq(
     organization := "com.snowplowanalytics",
-    scalaVersion := "2.11.11",
+    scalaVersion := "2.11.12",
 
     scalacOptions ++= Seq(
       "-deprecation",
@@ -145,4 +149,11 @@ object BuildSettings {
       val runPolicy = Tests.SubProcess(forkOptions)
       Tests.Group(name = test.name, tests = Seq(test), runPolicy = runPolicy)
     }
+
+  lazy val dynamoDbSettings = Seq(
+    startDynamoDBLocal := startDynamoDBLocal.dependsOn(compile in Test).value,
+    test in Test := (test in Test).dependsOn(startDynamoDBLocal).value,
+    testOnly in Test := (testOnly in Test).dependsOn(startDynamoDBLocal).evaluated,
+    testOptions in Test += dynamoDBLocalTestCleanup.value
+  )
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2012-2019 Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -483,7 +483,7 @@ class RedshiftLoaderSpec extends Specification { def is = s2"""
       Record(base, application, newId, None, State.New, time, author, None),
       List(
         Record(base, application, id1, None, State.Processing, time.plusSeconds(10), author, None),
-        Record(base, application, newId, Some(id1), State.Processed, time.plusSeconds(20), author, payload)
+        Record(base, application, newId, Some(id1), State.Processed, time.plusSeconds(20), author, payload.some)
       )))
 
     val dataDiscovery = for {
@@ -513,7 +513,7 @@ class RedshiftLoaderSpec extends Specification { def is = s2"""
       Record(base, application, newId, None, State.New, time, author, None),
       List(
         Record(base, application, id1, None, State.Processing, time.plusSeconds(10), author, None),
-        Record(base, application, newId, Some(id1), State.Processed, time.plusSeconds(20), author, payload)
+        Record(base, application, newId, Some(id1), State.Processed, time.plusSeconds(20), author, payload.some)
       )))
     val discovery = DataDiscovery(base, Some(1), None, Nil, false, Some(item))
     val statements = RedshiftLoadStatements(

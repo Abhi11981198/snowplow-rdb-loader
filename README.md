@@ -34,7 +34,7 @@ RDB Loader (previously known as StorageLoader) is a Scala application that runs 
 
 ## Copyright and License
 
-Snowplow Relational Database Loader is copyright 2012-2018 Snowplow Analytics Ltd.
+Snowplow Relational Database Loader is copyright 2012-2019 Snowplow Analytics Ltd.
 
 Licensed under the **[Apache License, Version 2.0][license]** (the "License");
 you may not use this software except in compliance with the License.
@@ -62,7 +62,7 @@ limitations under the License.
 [travis-image]: https://travis-ci.org/snowplow/snowplow-rdb-loader.png?branch=master
 [travis]: http://travis-ci.org/snowplow/snowplow-rdb-loader
 
-[release-image]: http://img.shields.io/badge/release-r29-blue.svg?style=flat
+[release-image]: http://img.shields.io/badge/release-r31-blue.svg?style=flat
 [releases]: https://github.com/snowplow/snowplow-rdb-loader/releases
 
 [license-image]: http://img.shields.io/badge/license-Apache--2-blue.svg?style=flat
